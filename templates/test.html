@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Image Generation Tester</title>
+</head>
+
+<body>
+    <h1>Image Generation Tester</h1>
+
+    <div id="image-preview">
+        <img src="#" id="the-image">
+    </div>
+
+    <label for="img-text">Input image text</label>
+    <input type="text" name="text" id="img-text">
+
+    <button type="button" id="btn-img-gen">Generate New Image</button>
+
+    <script>
+        let i = document.getElementById("the-image");
+        let t = document.getElementById("img-text");
+        let b = document.getElementById("btn-img-gen");
+        b.addEventListener("click", getNewImgUrl, false);
+
+        function getNewImgUrl() {
+            let url = new URL( location.origin + '{{ url_for("new_image") }}' );
+            url.searchParams.set("text", t.value);
+            url.searchParams.set("dl", 0);
+            i.src = url.toString();
+
+            // fetch('/new?' + params)
+            //     .then((res) => {
+            //         console.log(res.status);
+            //         res.blob
+            //     });
+        }
+
+        function tester(ev) {
+            console.log("#### EVENT:", ev);
+        }
+    </script>
+</body>
+
+</html>
