@@ -3,7 +3,7 @@ from datetime import datetime
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 import os
 
-from image_functions import generate_image, save_image
+from image_functions import generate_image, save_image, delete_image_folder
 
 app = Flask(__name__)
 
@@ -16,7 +16,6 @@ app.config["APPLICATION_ROOT"] = rt
 
 @app.route("/")
 def test_new_image():
-    print("Ghooba looba")
     return render_template("test.html")
 
 
@@ -51,6 +50,10 @@ def new_image():
         last_modified=None,
         max_age=None,
     )
+
+    gen_image.close()
+    delete_image_folder(file_name=image_path, dur=5)
+
     return r
 
 

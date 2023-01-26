@@ -1,7 +1,10 @@
 from math import floor
 from PIL import Image, ImageFont, ImageDraw
 import os
+import shutil
 import random
+import threading
+
 
 # Load the template PNG image and instantiate
 #   an ImageDraw object with it
@@ -74,7 +77,21 @@ def save_image(i: Image, file_name: str) -> str:
     save_path = os.path.join(new_path, file_name)
 
     i.save(save_path)
+    i.close()
     return save_path
+
+
+def delete_image_folder(file_name: str, dur: int):
+    """
+    Recursively deletes the image folder at the given path.
+    """
+
+    def delfol(f):
+        dir_path = os.path.dirname(f)
+        shutil.rmtree(dir_path)
+
+    t = threading.Timer(interval=dur, function=delfol, kwargs={"f": file_name})
+    t.start()
 
 
 def generate_nonce() -> str:
@@ -98,6 +115,4 @@ def generate_nonce() -> str:
     gen_all_spl = [*gen_all]
     random.shuffle(gen_all_spl)
     res = "".join(gen_all_spl)
-    # Preview
-    # print(res)
     return res
