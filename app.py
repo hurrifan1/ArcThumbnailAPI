@@ -5,13 +5,14 @@ from image_functions import generate_image, save_image
 
 app = Flask(__name__)
 
+print("##### Something is in fact happening!")
+
+# @app.route("/")
+# def hello_world():
+#   return "<p>Hello, World!</p>"
+
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
-@app.route("/test")
 def test_new_image():
     return render_template("test.html")
 
@@ -48,3 +49,10 @@ def new_image():
         max_age=None,
     )
     return r
+
+
+# Leftover from Replit:
+# app.run(host='0.0.0.0', port=81, debug=False)
+
+if __name__ == "__main__":
+    app.run(debug=False)

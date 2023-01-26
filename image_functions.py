@@ -12,20 +12,20 @@ def generate_image(text: str) -> Image:
     Uses the Pillow/PIL library to generate a PNG image with user-provided
     text. Returns the resulting Image object.
     """
-    img_fp = "layered-waves-haikei.png"
+    img_fp = "layered-waves-haikei 3.png"
     im = Image.open(img_fp, mode="r", formats=["png"])
     draw = ImageDraw.Draw(im)
 
     # Load our Nexa light font, text, and text size
 
-    my_font = ImageFont.truetype("Nexa Light.otf", 50)
+    my_font = ImageFont.truetype("Nexa Light.otf", 120)
     # my_text_raw = "How to Unpivot a Table in Qlik Sense"
     my_text_raw = text
 
     # Set the margins of the textbox
 
-    lr_margins = 50
-    tb_margins = 50
+    lr_margins = 80
+    tb_margins = 80
 
     # Calculate the line breaks
 
@@ -63,7 +63,7 @@ def save_image(i: Image, file_name: str) -> str:
     Uses the Pillow/PIL library to save the provided Image file to disk
     in a temporary folder generated on-the-fly.
     """
-    new_dir = "temp_img\\" + generate_nonce()
+    new_dir = "temp_img/" + generate_nonce()
     parent_dir = os.getcwd()
     new_path = os.path.join(parent_dir, new_dir)
     os.mkdir(new_path)
