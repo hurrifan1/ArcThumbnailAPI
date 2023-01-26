@@ -1,5 +1,7 @@
 from flask import Flask, request, send_file, render_template
 from datetime import datetime
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+import os
 
 from image_functions import generate_image, save_image
 
@@ -7,13 +9,14 @@ app = Flask(__name__)
 
 print("##### Something is in fact happening!")
 
-# @app.route("/")
-# def hello_world():
-#   return "<p>Hello, World!</p>"
+rt = os.getenv("APP_ROOT")
+rt = rt if rt else ""
+app.config["APPLICATION_ROOT"] = rt
 
 
 @app.route("/")
 def test_new_image():
+    print("Ghooba looba")
     return render_template("test.html")
 
 
@@ -53,6 +56,8 @@ def new_image():
 
 # Leftover from Replit:
 # app.run(host='0.0.0.0', port=81, debug=False)
+
+app.wsgi_app = DispatcherMiddleware(app, {app.config["APPLICATION_ROOT"]: app.wsgi_app})
 
 if __name__ == "__main__":
     app.run(debug=False)
